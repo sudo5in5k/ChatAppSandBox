@@ -29,7 +29,7 @@ class LoginListActivity : AppCompatActivity() {
 
         viewModel.signIn.observe(this) {
             if (it) {
-                startActivity(Intent(this, EmailRegisterActivity::class.java))
+                startActivity(Intent(this, EmailLoginActivity::class.java))
             }
         }
     }
