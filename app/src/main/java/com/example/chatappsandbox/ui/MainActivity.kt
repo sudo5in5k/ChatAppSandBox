@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.chatappsandbox.R
+import com.example.chatappsandbox.entity.UserInfo
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthAnonymousUpgradeException
 import com.google.firebase.auth.FirebaseAuth
@@ -51,6 +52,4 @@ class MainActivity : AppCompatActivity() {
             })
         }
     }
-
-    data class UserInfo(val username: String?, val email: String?)
 }
