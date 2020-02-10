@@ -29,6 +29,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -52,6 +56,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:18.0.0'
     implementation 'com.google.firebase:firebase-database:18.0.0'
 
+    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
+
+    // Twitter
+    implementation 'com.twitter.sdk.android:twitter-core:3.3.0'
+
     // RecyclerView
     def recyclerview_version = "1.0.0"
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
@@ -74,6 +83,10 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    def work_version = "2.3.0"
+    implementation "androidx.work:work-runtime:$work_version"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
 }
 
 apply plugin: 'com.google.gms.google-services'

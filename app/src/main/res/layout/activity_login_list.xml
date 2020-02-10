@@ -29,19 +29,6 @@
             android:onClick="@{() -> viewModel.onGoogleLoginClicked()}"
             android:text="Login with Google" />
 
-        <Button
-            android:id="@+id/login_twitter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.onTwitterLoginClicked()}"
-            android:text="Login with Twitter" />
-
-        <Button
-            android:id="@+id/login_facebook"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.onFacebookLoginClicked()}"
-            android:text="Login with Facebook" />
 
     </LinearLayout>
 
