@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ChatAppSandBox</string>
+    <string name="default_null_description">Null</string>
 </resources>
