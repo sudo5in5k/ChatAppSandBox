@@ -9,7 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.example.chatappsandbox.R
 import com.example.chatappsandbox.databinding.ActivityLoginListBinding
-import com.example.chatappsandbox.ui.MainActivity
+import com.example.chatappsandbox.ui.ChatUserListActivity
+import com.example.chatappsandbox.util.Consts
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
@@ -57,16 +58,12 @@ class LoginListActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         if (viewModel.auth.currentUser != null) {
-            startActivity(Intent(this, MainActivity::class.java).also {
-                it.putExtra("uid", viewModel.auth.currentUser?.uid)
-                it.putExtra("user_name", viewModel.auth.currentUser?.displayName)
-                it.putExtra("email", viewModel.auth.currentUser?.email)
+            startActivity(Intent(this, ChatUserListActivity::class.java).also {
+                it.putExtra(Consts.INTENT_UID, viewModel.auth.currentUser?.uid)
+                it.putExtra(Consts.INTENT_USER_NAME, viewModel.auth.currentUser?.displayName)
+                it.putExtra(Consts.INTENT_MAIL_ADDRESS, viewModel.auth.currentUser?.email)
             })
-            Toast.makeText(this, "already sign in", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "not sign in", Toast.LENGTH_SHORT).show()
         }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -76,7 +73,7 @@ class LoginListActivity : AppCompatActivity() {
             val response = IdpResponse.fromResultIntent(data)
             if (resultCode == RESULT_OK) {
                 val user = FirebaseAuth.getInstance().currentUser?.displayName ?: "Null Name"
-                val intent = Intent(this, MainActivity::class.java).also {
+                val intent = Intent(this, ChatUserListActivity::class.java).also {
                     it.putExtra("user_name", user)
                 }
                 startActivity(intent)

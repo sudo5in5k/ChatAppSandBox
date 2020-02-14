@@ -1,34 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:background="@color/colorPrimary"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="null"
-        android:paddingTop="8dp"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+    <data>
 
-    <TextView
-        android:id="@+id/username"
+        <variable
+            name="viewModel"
+            type="com.example.chatappsandbox.ui.ChatUserListViewModel" />
+
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        tools:text="test-user" />
+        android:layout_height="200dp"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <TextView
-        android:id="@+id/mail_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        tools:text="test@hoge.com" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="null"
+            android:paddingTop="8dp"
+            app:srcCompat="@mipmap/ic_launcher_round" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:text="@{viewModel.headerUserName}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            tools:text="test-user" />
+
+        <TextView
+            android:id="@+id/mailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.headerMailAddress}"
+            android:paddingTop="8dp"
+            tools:text="test@hoge.com" />
+
+    </LinearLayout>
+</layout>

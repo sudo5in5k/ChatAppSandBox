@@ -1,7 +1,6 @@
 package com.example.chatappsandbox.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -13,15 +12,14 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chatappsandbox.R
 import com.example.chatappsandbox.databinding.ActivityMainBinding
-import com.example.chatappsandbox.entity.UserInfo
+import com.example.chatappsandbox.databinding.NavHeaderMainBinding
+import com.example.chatappsandbox.util.Consts
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    private val db = FirebaseDatabase.getInstance()
+class ChatUserListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+
     private var uid: String? = null
     private lateinit var adapter: ChatUserListAdapter
 
@@ -32,6 +30,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     lateinit var activityMainBinding: ActivityMainBinding
+    lateinit var navHeaderMainBinding: NavHeaderMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,31 +46,37 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             it.setHasFixedSize(true)
         }
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(activityMainBinding.appBar.toolbar)
 
-        nav_view.setNavigationItemSelectedListener(this)
+        activityMainBinding.navView.setNavigationItemSelectedListener(this)
 
-        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawer_layout, toolbar, 0, 0)
-        drawer_layout.addDrawerListener(actionBarDrawerToggle)
+        actionBarDrawerToggle = ActionBarDrawerToggle(
+            this,
+            activityMainBinding.drawerLayout,
+            activityMainBinding.appBar.toolbar,
+            0,
+            0
+        )
+        activityMainBinding.drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.isDrawerIndicatorEnabled = true
         actionBarDrawerToggle.syncState()
 
-        uid = intent.getStringExtra("uid")
-        val username = intent.getStringExtra("user_name")
-        val email = intent.getStringExtra("email")
-
-        // register
-        if (uid != null) {
-            db.getReference("users/${uid}").setValue(UserInfo(username, email))
+        navHeaderMainBinding =
+            NavHeaderMainBinding.inflate(layoutInflater, activityMainBinding.navView, false)
+        navHeaderMainBinding.also {
+            it.viewModel = viewModel
+            it.lifecycleOwner = this
         }
+        activityMainBinding.navView.addHeaderView(navHeaderMainBinding.root)
 
+        uid = intent.getStringExtra(Consts.INTENT_UID)
+
+        viewModel.registerUserToDB(uid)
+        viewModel.loadHeaderUserNameFromIntent(intent)
         viewModel.loadChatListItems(uid)
 
         viewModel.allUsers.observe(this) { list ->
-            list.forEach {
-                Log.d("debug", "from: ${it.from}")
-                Log.d("debug", "text: ${it.text}")
-            }
+            adapter.setAllUsers(list)
             viewModel.endLoading()
         }
 
@@ -80,12 +85,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 finish()
             }
         }
+
+        viewModel.headerUserName.observe(this) {
+
+        }
+
+        viewModel.headerMailAddress.observe(this) {
+            //activityMainBinding.navView.mail_address.text = it
+        }
     }
 
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
         when (p0.itemId) {
             R.id.nav_home -> {
-                drawer_layout.closeDrawer(GravityCompat.START)
+                activityMainBinding.drawerLayout.closeDrawer(GravityCompat.START)
                 return true
             }
             R.id.nav_logout -> {
@@ -98,8 +111,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
+        if (activityMainBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            activityMainBinding.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
         }
