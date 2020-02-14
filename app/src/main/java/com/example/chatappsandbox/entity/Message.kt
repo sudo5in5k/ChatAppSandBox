@@ -1,3 +1,8 @@
 package com.example.chatappsandbox.entity
 
-data class Message(val from: String, val text: String, val time: String)
+import com.google.firebase.database.IgnoreExtraProperties
+import com.squareup.moshi.JsonClass
+
+@IgnoreExtraProperties
+@JsonClass(generateAdapter = true)
+data class Message(val from: String, val text: String, val time: Long)
