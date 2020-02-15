@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.chatappsandbox.ui.ChatUserListViewModel" />
+            type="com.example.chatappsandbox.ui.userlist.ChatUserListViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:tools="http://schemas.android.com/tools"

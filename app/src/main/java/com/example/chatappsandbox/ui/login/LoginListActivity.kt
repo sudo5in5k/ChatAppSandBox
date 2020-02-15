@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.example.chatappsandbox.R
 import com.example.chatappsandbox.databinding.ActivityLoginListBinding
-import com.example.chatappsandbox.ui.ChatUserListActivity
+import com.example.chatappsandbox.ui.userlist.ChatUserListActivity
 import com.example.chatappsandbox.util.Consts
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes

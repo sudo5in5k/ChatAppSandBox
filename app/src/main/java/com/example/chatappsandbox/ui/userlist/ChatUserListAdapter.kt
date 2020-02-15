@@ -1,6 +1,5 @@
-package com.example.chatappsandbox.ui
+package com.example.chatappsandbox.ui.userlist
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +10,7 @@ class ChatUserListAdapter(private val viewModel: ChatUserListViewModel) :
     RecyclerView.Adapter<ChatUserListAdapter.ViewHolder>() {
 
     /**
-     * メッセージ一覧から整形して使う
+     * TODO メッセージ一覧から整形して使う
      */
     private var users: List<Message> = arrayListOf()
 

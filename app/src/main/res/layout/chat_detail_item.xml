@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="message"
+            type="com.example.chatappsandbox.entity.Message" />
+
+        <variable
+            name="viewModel"
+            type="com.example.chatappsandbox.ui.userdetail.ChatDetailViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        tools:background="#000000">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/default_null_description"
+            app:srcCompat="@drawable/ic_logout_gray_24dp" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:background="#FFFFFF"
+            android:rotation="45" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-6dp"
+            android:background="#FFFFFF"
+            android:padding="8dp"
+            android:text="@{message.text}"
+            android:textColor="#757575"
+            tools:text="hello world" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="8dp"
+            app:parseTime="@{message.time}"
+            android:textColor="#FFFFFF"
+            tools:text="20:50" />
+
+    </LinearLayout>
+</layout>

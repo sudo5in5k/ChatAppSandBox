@@ -1,4 +1,4 @@
-package com.example.chatappsandbox.ui
+package com.example.chatappsandbox.ui.userlist
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -15,6 +15,7 @@ import com.example.chatappsandbox.databinding.ActivityMainBinding
 import com.example.chatappsandbox.databinding.NavHeaderMainBinding
 import com.example.chatappsandbox.util.Consts
 import com.google.android.material.navigation.NavigationView
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 class ChatUserListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -32,6 +33,7 @@ class ChatUserListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
     lateinit var activityMainBinding: ActivityMainBinding
     lateinit var navHeaderMainBinding: NavHeaderMainBinding
 
+    @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter = ChatUserListAdapter(viewModel)
@@ -39,38 +41,24 @@ class ChatUserListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         activityMainBinding.lifecycleOwner = this
 
-        activityMainBinding.appBar.content.viewModel = viewModel
-        activityMainBinding.appBar.content.chatListRecycler.also {
-            it.adapter = adapter
-            it.layoutManager = LinearLayoutManager(this)
-            it.setHasFixedSize(true)
+        activityMainBinding.appBar.content.also {
+            it.viewModel = viewModel
+            it.chatListRecycler.also {recyclerView ->
+                recyclerView.adapter = adapter
+                recyclerView.layoutManager = LinearLayoutManager(this)
+                recyclerView.setHasFixedSize(true)
+            }
         }
 
         setSupportActionBar(activityMainBinding.appBar.toolbar)
-
         activityMainBinding.navView.setNavigationItemSelectedListener(this)
 
-        actionBarDrawerToggle = ActionBarDrawerToggle(
-            this,
-            activityMainBinding.drawerLayout,
-            activityMainBinding.appBar.toolbar,
-            0,
-            0
-        )
-        activityMainBinding.drawerLayout.addDrawerListener(actionBarDrawerToggle)
-        actionBarDrawerToggle.isDrawerIndicatorEnabled = true
-        actionBarDrawerToggle.syncState()
-
-        navHeaderMainBinding =
-            NavHeaderMainBinding.inflate(layoutInflater, activityMainBinding.navView, false)
-        navHeaderMainBinding.also {
-            it.viewModel = viewModel
-            it.lifecycleOwner = this
-        }
-        activityMainBinding.navView.addHeaderView(navHeaderMainBinding.root)
+        setupDrawer()
+        setupHeaderBinding()
 
         uid = intent.getStringExtra(Consts.INTENT_UID)
 
+        viewModel.loadUid(uid)
         viewModel.registerUserToDB(uid)
         viewModel.loadHeaderUserNameFromIntent(intent)
         viewModel.loadChatListItems(uid)
@@ -85,14 +73,32 @@ class ChatUserListActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                 finish()
             }
         }
+    }
 
-        viewModel.headerUserName.observe(this) {
+    private fun setupDrawer() {
+        actionBarDrawerToggle = ActionBarDrawerToggle(
+            this,
+            activityMainBinding.drawerLayout,
+            activityMainBinding.appBar.toolbar,
+            0,
+            0
+        )
+        activityMainBinding.drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        actionBarDrawerToggle.isDrawerIndicatorEnabled = true
+        actionBarDrawerToggle.syncState()
+    }
 
+    /**
+     * xmlのapp:headerLayoutではbindされないため
+     */
+    private fun setupHeaderBinding() {
+        navHeaderMainBinding =
+            NavHeaderMainBinding.inflate(layoutInflater, activityMainBinding.navView, false)
+        navHeaderMainBinding.also {
+            it.viewModel = viewModel
+            it.lifecycleOwner = this
         }
-
-        viewModel.headerMailAddress.observe(this) {
-            //activityMainBinding.navView.mail_address.text = it
-        }
+        activityMainBinding.navView.addHeaderView(navHeaderMainBinding.root)
     }
 
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {

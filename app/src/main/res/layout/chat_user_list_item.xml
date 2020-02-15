@@ -12,7 +12,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.chatappsandbox.ui.ChatUserListViewModel" />
+            type="com.example.chatappsandbox.ui.userlist.ChatUserListViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -26,6 +26,7 @@
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.onItemClick(viewModel.uid, message)}"
             android:padding="16dp">
 
             <ImageView
