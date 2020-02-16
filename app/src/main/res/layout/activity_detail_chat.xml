@@ -27,10 +27,10 @@
             android:id="@+id/char_detail_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/cardview_dark_background"
             android:paddingTop="?attr/actionBarSize"
             android:paddingBottom="?attr/actionBarSize"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:background="@color/cardview_dark_background"
             tools:listitem="@layout/chat_detail_item" />
 
         <LinearLayout
@@ -42,19 +42,23 @@
             <EditText
                 android:id="@+id/message"
                 android:layout_width="0dp"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_weight="0.8"
-                android:padding="8dp" />
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_weight="0.9"
+                android:inputType="text"
+                android:autofillHints="メッセージを入力"
+                android:text="@={viewModel.draft}" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/send"
                 android:layout_width="0dp"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_weight="0.2"
-                android:padding="8dp"
-                android:clickable="@{viewModel.sendClickable.booleanValue()}"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_weight="0.1"
+                android:drawableStart="@drawable/ic_send_gray_24dp"
+                android:enabled="@{viewModel.sendClickable.booleanValue()}"
                 android:onClick="@{() -> viewModel.onSendClick()}"
-                app:srcCompat="@drawable/ic_send_gray_24dp" />
+                android:padding="8dp" />
         </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
