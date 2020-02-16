@@ -9,8 +9,6 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chatappsandbox.R
 import com.example.chatappsandbox.databinding.ActivityDetailChatBinding
-import com.example.chatappsandbox.entity.Message
-import com.example.chatappsandbox.util.Consts
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 class ChatDetailActivity : AppCompatActivity() {
@@ -22,9 +20,6 @@ class ChatDetailActivity : AppCompatActivity() {
         )
     }
 
-    private var message: Message? = null
-    private var uid: String? = null
-
     lateinit var activityDetailChatBinding: ActivityDetailChatBinding
     lateinit var adapter: ChatDetailAdapter
 
@@ -32,9 +27,15 @@ class ChatDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        /**
+         * From intent
+         */
+        viewModel.preserveExtras(intent)
+
         activityDetailChatBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_detail_chat)
         activityDetailChatBinding.also {
+            it.activity = this
             it.viewModel = viewModel
             it.lifecycleOwner = this
         }
@@ -52,13 +53,7 @@ class ChatDetailActivity : AppCompatActivity() {
             viewModel.endLoading()
         }
 
-        /**
-         * From intent
-         */
-        message = intent.getSerializableExtra(Consts.INTENT_TO_CHAT_DETAIL_ACTIVITY) as? Message
-        uid = intent.getStringExtra(Consts.INTENT_UID)
-
-        viewModel.loadArchiveForMe(uid, message)
-        viewModel.loadArchiveFromMe(uid, message)
+        viewModel.loadArchiveForMe()
+        viewModel.loadArchiveFromMe()
     }
 }

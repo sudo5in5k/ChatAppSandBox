@@ -8,6 +8,10 @@
         <import type="android.view.View" />
 
         <variable
+            name="activity"
+            type="com.example.chatappsandbox.ui.userdetail.ChatDetailActivity" />
+
+        <variable
             name="viewModel"
             type="com.example.chatappsandbox.ui.userdetail.ChatDetailViewModel" />
     </data>
@@ -57,7 +61,7 @@
                 android:layout_weight="0.1"
                 android:drawableStart="@drawable/ic_send_gray_24dp"
                 android:enabled="@{viewModel.sendClickable.booleanValue()}"
-                android:onClick="@{() -> viewModel.onSendClick()}"
+                android:onClick="@{() -> viewModel.onSendClick(activity)}"
                 android:padding="8dp" />
         </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
