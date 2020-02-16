@@ -31,8 +31,7 @@
             android:id="@+id/char_detail_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/cardview_dark_background"
-            android:paddingTop="?attr/actionBarSize"
+            android:background="#4cb5a6"
             android:paddingBottom="?attr/actionBarSize"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:listitem="@layout/chat_detail_item" />
@@ -41,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="bottom"
+            android:background="#FFFFFF"
             android:orientation="horizontal">
 
             <EditText
@@ -49,8 +49,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
                 android:layout_weight="0.9"
+                android:autofillHints="enter message"
                 android:inputType="text"
-                android:autofillHints="メッセージを入力"
                 android:text="@={viewModel.draft}" />
 
             <TextView

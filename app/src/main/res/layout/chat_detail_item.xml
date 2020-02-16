@@ -18,8 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8dp"
-        tools:background="#000000">
+        android:padding="8dp">
 
         <ImageView
             android:layout_width="32dp"
@@ -51,8 +50,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginStart="8dp"
-            app:parseTime="@{message.time}"
             android:textColor="#FFFFFF"
+            app:parseTime="@{message.time}"
             tools:text="20:50" />
 
     </LinearLayout>
