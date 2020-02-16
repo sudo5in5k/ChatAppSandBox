@@ -1,7 +1,6 @@
 package com.example.chatappsandbox.ui.userdetail
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -16,6 +15,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 class ChatDetailActivity : AppCompatActivity() {
 
+    @ExperimentalCoroutinesApi
     private val viewModel: ChatDetailViewModel by viewModels {
         ViewModelProvider.AndroidViewModelFactory(
             application
@@ -32,7 +32,8 @@ class ChatDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        activityDetailChatBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail_chat)
+        activityDetailChatBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_detail_chat)
         activityDetailChatBinding.also {
             it.viewModel = viewModel
             it.lifecycleOwner = this
@@ -57,6 +58,7 @@ class ChatDetailActivity : AppCompatActivity() {
         message = intent.getSerializableExtra(Consts.INTENT_TO_CHAT_DETAIL_ACTIVITY) as? Message
         uid = intent.getStringExtra(Consts.INTENT_UID)
 
-        viewModel.loadArchives(uid, message)
+        viewModel.loadArchiveForMe(uid, message)
+        viewModel.loadArchiveFromMe(uid, message)
     }
 }
